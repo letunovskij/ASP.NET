@@ -76,7 +76,7 @@ public class EmployeesController : ControllerBase
     /// Создать сотрудника
     /// </summary>
     [HttpPost]
-    public async Task<EmployeeView> CreateEmployee(EmployeeCreateDto dto)
+    public async Task<ActionResult<EmployeeView>> CreateEmployee(EmployeeCreateDto dto)
     {
         var employee = dto.Adapt<Employee>();
 
@@ -87,9 +87,11 @@ public class EmployeesController : ControllerBase
     /// Обновить сотрудника
     /// </summary>
     [HttpPut("{id:guid}")]
-    public async Task<EmployeeView> UpdateEmployee(Guid id, EmployeeUpdateDto dto)
+    public async Task<ActionResult<EmployeeView>> UpdateEmployee(Guid id, EmployeeUpdateDto dto)
     {
-        var employee = await employeeRepository.GetByIdAsync(id) ?? throw new Exception($"Не найден пользователь {id}");
+        var employee = await employeeRepository.GetByIdAsync(id);
+        if (employee == null)
+            return NotFound();
 
         dto.Adapt(employee);
 
@@ -100,6 +102,13 @@ public class EmployeesController : ControllerBase
     /// Удалить сотрудника
     /// </summary>
     [HttpDelete("{id:guid}")]
-    public async Task DeleteEmployee(Guid id)
-        => await employeeRepository.Delete(id);
+    public async Task<ActionResult> DeleteEmployee(Guid id)
+    {
+        var employee = await employeeRepository.GetByIdAsync(id);
+        if (employee == null)
+            return NotFound();
+
+        await employeeRepository.Delete(id);
+        return Ok();
+    }
 }
