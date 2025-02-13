@@ -17,7 +17,8 @@ jobs:
     env:
       PROJECT_NAME: PromoCodeFactory.WebHost
       PROJECT_NAME_TESTS: PromoCodeFactory.UnitTests
-      PROJECT_PATH: ../../Homeworks/UnitTests/src
+      PROJECT_PATH1: ../../Homeworks/UnitTests/src
+      PROJECT_PATH: Homeworks/UnitTests/src
 
     steps:
     - uses: actions/checkout@v4
@@ -26,7 +27,7 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Build project
-      run: dotnet build ${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj -c Release -o content
+      run: dotnet build ${{ env.PROJECT_PATH }}/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj -c Release -o content
 
     - name: Run tests
-      run: dotnet test ${{ env.PROJECT_NAME_TESTS }}/${{ env.PROJECT_NAME_TESTS }}.csproj
+      run: dotnet test ${{ env.PROJECT_PATH }}/${{ env.PROJECT_NAME_TESTS }}/${{ env.PROJECT_NAME_TESTS }}.csproj
