@@ -17,7 +17,8 @@ jobs:
     env:
       PROJECT_NAME: PromoCodeFactory.WebHost
       PROJECT_NAME_TESTS: PromoCodeFactory.UnitTests
-      PROJECT_PATH: ../../Homeworks/UnitTests/src
+      PROJECT_PATH1: ../../Homeworks/UnitTests/src
+      PROJECT_PATH: Homeworks/UnitTests/src
 
     steps:
     - uses: actions/checkout@v4
